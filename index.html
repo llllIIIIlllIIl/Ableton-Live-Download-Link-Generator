@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ableton Live Download Link Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #4a4a4a 0%, #232323 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(167, 167, 167, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 480px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #888888, #4a4a4a);
+            border-radius: 12px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #000000;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            color: #232323;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            color: #232323;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 16px;
+            border: 2px solid #888888;
+            border-radius: 12px;
+            background: white;
+            color: #232323;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #4a4a4a;
+            box-shadow: 0 0 0 3px rgba(74, 74, 74, 0.2);
+            transform: translateY(-1px);
+        }
+
+        select:hover, input:hover {
+            border-color: #4a4a4a;
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23232323' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 16px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+            padding-right: 48px;
+        }
+
+        .generate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #232323 0%, #000000 100%);
+            color: white;
+            border: none;
+            padding: 18px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(35, 35, 35, 0.4);
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(35, 35, 35, 0.5);
+        }
+
+        .generate-btn:active {
+            transform: translateY(0);
+        }
+
+        .download-section {
+            display: none;
+            margin-top: 32px;
+            padding: 24px;
+            background: linear-gradient(135deg, #888888 0%, #a7a7a7 100%);
+            border-radius: 16px;
+            border: 1px solid #4a4a4a;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .download-section.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .download-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #232323, #000000);
+            border-radius: 8px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .download-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .download-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #000000, #232323);
+            color: white;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .download-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .download-link.secondary {
+            background: linear-gradient(135deg, #4a4a4a, #232323);
+            font-size: 14px;
+            padding: 12px 24px;
+        }
+
+        .download-info {
+            color: #232323;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .warning-box {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 16px;
+            font-size: 13px;
+            color: #232323;
+            line-height: 1.4;
+        }
+
+        .warning-icon {
+            display: inline-block;
+            margin-right: 6px;
+            font-weight: bold;
+        }
+
+        .url-display {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            padding: 12px;
+            margin: 12px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #232323;
+            word-break: break-all;
+            border: 1px solid #888888;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 24px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 20px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+            }
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .version-input {
+            padding-left: 48px;
+        }
+
+        .input-icon::before {
+            content: "#";
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888888;
+            font-weight: 600;
+            font-size: 16px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">A</div>
+            <h1>Ableton Live Download Link Generator</h1>
+            <p class="subtitle">Generate official download links from Ableton's CDN servers</p>
+        </div>
+        
+        <form>
+            <div class="form-group">
+                <label for="edition">Edition</label>
+                <select id="edition">
+                    <option value="suite" selected>Suite</option>
+                    <option value="standard">Standard</option>
+                    <option value="intro">Intro</option>
+                    <option value="trial">Trial</option>
+                    <option value="lite">Lite</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="os">Operating System</label>
+                <select id="os">
+                    <option value="windows">Windows</option>
+                    <option value="mac">macOS</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="version">Version Number</label>
+                <div class="input-icon">
+                    <input type="text" id="version" class="version-input" placeholder="12.2.5" value="12.2.5">
+                </div>
+            </div>
+            
+            <button type="button" class="generate-btn" onclick="generateLink()">
+                Generate Download Link
+            </button>
+        </form>
+        
+        <div class="download-section" id="downloadSection">
+            <div class="download-icon">↓</div>
+            <div class="download-links">
+                <a id="primaryLink" href="" target="_blank" class="download-link">Primary Download (CDN)</a>
+                <a id="fallbackLink" href="" target="_blank" class="download-link secondary">Fallback Download (CDN2)</a>
+            </div>
+            <div class="download-info" id="downloadInfo"></div>
+            <div class="url-display" id="urlDisplay"></div>
+            <div class="warning-box">
+                <span class="warning-icon">⚠️</span>
+                <strong>Note:</strong> Two download links are provided from different CDN servers. If the primary link doesn't work, try the fallback CDN2 link. If both fail, the version may not exist or the URL structure has changed.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateLink() {
+            const edition = document.getElementById('edition').value;
+            const os = document.getElementById('os').value;
+            const version = document.getElementById('version').value.trim();
+            const downloadSection = document.getElementById('downloadSection');
+            const primaryLink = document.getElementById('primaryLink');
+            const fallbackLink = document.getElementById('fallbackLink');
+            const downloadInfo = document.getElementById('downloadInfo');
+            const urlDisplay = document.getElementById('urlDisplay');
+            
+            if (!version) {
+                alert('Please enter a valid version number.');
+                return;
+            }
+            
+            // Determine the format based on version number and OS
+            const versionParts = version.split('.').map(Number);
+            let fileExtension, architecture;
+            
+            if (os === 'windows') {
+                fileExtension = '.zip';
+                architecture = '64';
+            } else { // macOS
+                fileExtension = '.dmg';
+                // If version is 11.1 or later, use "universal", otherwise "64"
+                if (versionParts[0] > 11 || (versionParts[0] === 11 && versionParts[1] >= 1)) {
+                    architecture = 'universal';
+                } else {
+                    architecture = '64';
+                }
+            }
+            
+            // Construct both URLs - primary CDN and fallback CDN2
+            const primaryUrl = `https://cdn-downloads.ableton.com/channels/${version}/ableton_live_${edition}_${version}_${architecture}${fileExtension}`;
+            const fallbackUrl = `https://cdn2-downloads.ableton.com/channels/${version}/ableton_live_${edition}_${version}_${architecture}${fileExtension}`;
+            
+            // Set the download links
+            primaryLink.href = primaryUrl;
+            fallbackLink.href = fallbackUrl;
+            
+            const editionName = edition.charAt(0).toUpperCase() + edition.slice(1);
+            const osName = os === 'windows' ? 'Windows' : 'macOS';
+            
+            primaryLink.textContent = `Download ${editionName} (Primary CDN)`;
+            fallbackLink.textContent = `Download ${editionName} (Fallback CDN2)`;
+            downloadInfo.textContent = `Version ${version} for ${osName}`;
+            urlDisplay.innerHTML = `<strong>Primary:</strong> ${primaryUrl}<br><strong>Fallback:</strong> ${fallbackUrl}`;
+            
+            // Show the download section with animation
+            downloadSection.classList.add('show');
+            
+            // Force reflow for smooth animation
+            setTimeout(() => {
+                downloadSection.style.opacity = '1';
+                downloadSection.style.transform = 'translateY(0)';
+            }, 10);
+        }
+
+        // Add smooth animations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(30px)';
+            
+            setTimeout(() => {
+                container.style.transition = 'all 0.6s ease';
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
