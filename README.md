@@ -3,7 +3,7 @@
 
 A clean, modern web application that generates official download links for Ableton Live directly from Ableton's CDN servers. Features dual CDN support and Ableton's signature grey aesthetic.
 
-🌐 **Use Online**: [https://](https://)
+🌐 **Use Online**: [github.io hosted page](https://ableton-live.1113000.xyz/)
 
 
 ## ✨ Features
@@ -18,7 +18,7 @@ A clean, modern web application that generates official download links for Ablet
 ## 🚀 How to Use
 
 ### Quick Access (Recommended)
-Simply visit: **[https://](https://)**
+Simply visit: **[github.io hosted page](https://ableton-live.1113000.xyz/)**
 
 1. Select your desired **Edition** (Suite is selected by default)
 2. Choose your **Operating System** (Windows or macOS)
