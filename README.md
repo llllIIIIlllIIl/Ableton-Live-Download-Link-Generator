@@ -81,11 +81,6 @@ Fallback: https://cdn2-downloads.ableton.com/channels/{version}/ableton_live_{ed
 - ✅ Safari 14+
 - ✅ Edge 90+
 
-## 🤝 Contributing
-
-Found a bug or want to improve the tool? 
-- 🐛 [Open an Issue](https://github.com/yourusername/ableton-download-generator/issues)
-- 💡 [Suggest an Enhancement](https://github.com/yourusername/ableton-download-generator/issues)
 
 ## 📄 License
 
